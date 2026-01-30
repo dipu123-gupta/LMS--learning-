@@ -19,13 +19,22 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://lms-learning.onrender.com"
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://lms-learning.onrender.com"
+      ];
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/user", authRouter);
