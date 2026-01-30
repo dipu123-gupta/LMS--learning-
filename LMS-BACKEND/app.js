@@ -50,6 +50,13 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/u", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "LMS Backend is landing 🚀",
+  });
+});
+
 
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
