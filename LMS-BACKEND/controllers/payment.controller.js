@@ -3,7 +3,8 @@ import Course from "../models/course.model.js";
 import Payment from "../models/payment.model.js";
 import AppError from "../utils/error.util.js";
 import crypto from "crypto";
-import { razorpay } from "../server.js";
+// import { razorpay } from "../server.js";
+import { razorpay } from '../server.js';
 
 /* ===================== GET RAZORPAY KEY ===================== */
 const getRazorpayApiKey = async (req, res, next) => {
