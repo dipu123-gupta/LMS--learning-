@@ -1,0 +1,34 @@
+import express from "express";
+import {
+  register,
+  login,
+  profile,
+  logout,
+  forgetPassword,
+  resetPassword,
+  changePassword,
+  updateProfile,
+} from "../controllers/user.controller.js";
+import upload from "../middlewares/multer.middleware.js";
+import { isLoggedIn } from "../middlewares/auth.middleware.js"; 
+import contactUs from "../controllers/contact.controllor.js";
+
+const authRouter = express.Router();
+
+authRouter.post("/register", upload.single("avatar"), register);
+authRouter.post("/login", login);
+authRouter.post("/logout", isLoggedIn, logout);
+authRouter.get("/profile", isLoggedIn, profile);
+authRouter.put("/update", upload.single("avatar"), isLoggedIn, updateProfile);
+authRouter.post("/forgotpassword", forgetPassword);
+authRouter.post("/reset-password/:resetToken", resetPassword);
+authRouter.post("/change-password", isLoggedIn, changePassword);
+authRouter.get("/subscription/status", isLoggedIn, (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: req.user.subscription?.status || "inactive",
+  });
+});
+authRouter.post("/",contactUs);
+
+export default authRouter;
