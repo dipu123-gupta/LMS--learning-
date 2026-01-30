@@ -28,6 +28,16 @@ app.use("/api/v1/user", authRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/payment", paymentRoutes);
 
+// app.use()
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "LMS Backend is running 🚀",
+  });
+});
+
+
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });
 });
