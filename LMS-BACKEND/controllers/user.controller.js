@@ -5,11 +5,11 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs/promises";
 import crypto from "crypto";
 
-const cookieOption = {
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-};
+// const cookieOption = {
+//   maxAge: 7 * 24 * 60 * 60 * 1000,
+//   httpOnly: true,
+//   secure: process.env.NODE_ENV === "production",
+// };
 
 // ================= REGISTER =================
 const register = async (req, res, next) => {
@@ -69,7 +69,18 @@ const register = async (req, res, next) => {
     user.password = undefined;
 
     const token = user.generateToken();
-    res.cookie("token", token, cookieOption);
+    // res.cookie("token", token, {
+
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       success: true,
@@ -103,7 +114,14 @@ const login = async (req, res, next) => {
     user.activeToken = token;
     await user.save();
 
-    res.cookie("token", token, cookieOption);
+    // res.cookie("token", token, cookieOption);
+
+     res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
@@ -141,9 +159,16 @@ const logout = async (req, res, next) => {
       await user.save();
     }
 
-    res.cookie("token", null, {
+    // res.cookie("token", null, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   maxAge: 0,
+    // });
+
+     res.cookie("token", null, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", 
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
       maxAge: 0,
     });
 
@@ -155,7 +180,6 @@ const logout = async (req, res, next) => {
     next(error);
   }
 };
-
 
 // ================= FORGETPASSWORD =================
 const forgetPassword = async (req, res, next) => {
@@ -299,6 +323,7 @@ const changePassword = async (req, res, next) => {
     res.cookie("token", null, {
       expires: new Date(Date.now()),
       httpOnly: true,
+      sameSite: "none",
     });
 
     res.status(200).json({
