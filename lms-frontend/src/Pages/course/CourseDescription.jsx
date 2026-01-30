@@ -3,34 +3,142 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// const CourseDescription = () => {
+//   const { state } = useLocation(); // course data
+//   const navigate = useNavigate();
+
+//   // auth state
+//   const { role, data: user } = useSelector((state) => state.auth);
+
+//   // current course id
+//   const courseId = state?._id;
+
+//   // COURSE-WISE ACCESS CHECK
+//   const hasAccess =
+//     role === "admin" ||
+//     user?.subscribedCourses?.some((id) => id.toString() === courseId);
+
+//   return (
+//     <HomeLayout>
+//       <div className="min-h-[90vh] pt-12 px-10 flex items-center justify-center text-white">
+//         <div className="grid grid-cols-2 gap-10 py-10 px-10 rounded-2xl bg-gradient-to-br from-[#1A2238] to-[#0F172A] shadow-2xl border border-gray-700 max-w-6xl w-full">
+//           {/* ================= LEFT CARD ================= */}
+//           <div className="space-y-6 bg-[#111827] p-6 rounded-xl shadow-lg border border-gray-700">
+//             <img
+//               src={state?.thumbnail?.secure_url}
+//               alt="thumbnail"
+//               className="w-full h-64 object-cover rounded-xl border border-gray-600"
+//             />
+
+//             <div className="space-y-2 text-center">
+//               <p className="font-semibold">
+//                 <span className="text-yellow-400">Total Lectures:</span>{" "}
+//                 {state?.numberOfLectures}
+//               </p>
+
+//               <p className="font-semibold">
+//                 <span className="text-yellow-400">Instructor:</span>{" "}
+//                 {state?.createdBy}
+//               </p>
+//             </div>
+
+//             {/* ================= ACTION BUTTON ================= */}
+//             {hasAccess ? (
+//               <button
+//                 onClick={() =>
+//                   navigate("/course/display-lectures", {
+//                     state: { ...state },
+//                   })
+//                 }
+//                 className="w-full bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-bold py-3 rounded-lg transition-all"
+//               >
+//                 Watch Lectures ▶
+//               </button>
+//             ) : (
+//               <button
+//                 onClick={() =>
+//                   navigate("/checkout", {
+//                     state: { courseId },
+//                   })
+//                 }
+//                 className="w-full bg-green-600 hover:bg-green-500 text-white text-lg font-bold py-3 rounded-lg transition-all"
+//               >
+//                 Buy This Course 💳
+//               </button>
+//             )}
+//           </div>
+
+//           {/* ================= RIGHT CARD ================= */}
+//           <div className="space-y-4 bg-[#111827] p-8 rounded-xl shadow-lg border border-gray-700">
+//             <h1 className="text-4xl font-extrabold text-yellow-400 text-center">
+//               {state?.title}
+//             </h1>
+
+//             <p className="text-yellow-400 font-semibold text-lg">
+//               Course Description
+//             </p>
+
+//             <p className="text-gray-300 leading-relaxed">
+//               {state?.description}
+//             </p>
+
+//             {/* <h2 className="text-2xl font-bold text-yellow-400">
+//               {state?.price === 0 ? "Free Course" : `Price: ₹ ${state.price}`}
+//             </h2> */}
+
+//             {/*  ACCESS INFO */}
+//             {!hasAccess && role !== "admin" && (
+//               <p className="text-red-400 font-semibold mt-4">
+//                 ⚠ You are not subscribed to this course
+//               </p>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </HomeLayout>
+//   );
+// };
+
+
 const CourseDescription = () => {
-  const { state } = useLocation(); // course data
+  const { state } = useLocation();
   const navigate = useNavigate();
 
-  // auth state
   const { role, data: user } = useSelector((state) => state.auth);
-
-  // current course id
   const courseId = state?._id;
 
-  // COURSE-WISE ACCESS CHECK
   const hasAccess =
     role === "admin" ||
     user?.subscribedCourses?.some((id) => id.toString() === courseId);
 
   return (
     <HomeLayout>
-      <div className="min-h-[90vh] pt-12 px-10 flex items-center justify-center text-white">
-        <div className="grid grid-cols-2 gap-10 py-10 px-10 rounded-2xl bg-gradient-to-br from-[#1A2238] to-[#0F172A] shadow-2xl border border-gray-700 max-w-6xl w-full">
+      <div className="min-h-[90vh] pt-8 sm:pt-12 px-4 sm:px-6 lg:px-10 flex items-center justify-center text-white">
+        <div
+          className="
+            grid grid-cols-1 lg:grid-cols-2
+            gap-6 sm:gap-8 lg:gap-10
+            py-6 sm:py-8 lg:py-10
+            px-4 sm:px-6 lg:px-10
+            rounded-2xl
+            bg-gradient-to-br from-[#1A2238] to-[#0F172A]
+            shadow-2xl border border-gray-700
+            max-w-6xl w-full
+          "
+        >
           {/* ================= LEFT CARD ================= */}
-          <div className="space-y-6 bg-[#111827] p-6 rounded-xl shadow-lg border border-gray-700">
+          <div className="space-y-5 bg-[#111827] p-4 sm:p-6 rounded-xl shadow-lg border border-gray-700">
             <img
               src={state?.thumbnail?.secure_url}
               alt="thumbnail"
-              className="w-full h-64 object-cover rounded-xl border border-gray-600"
+              className="
+                w-full h-48 sm:h-56 lg:h-64
+                object-cover rounded-xl
+                border border-gray-600
+              "
             />
 
-            <div className="space-y-2 text-center">
+            <div className="space-y-2 text-center text-sm sm:text-base">
               <p className="font-semibold">
                 <span className="text-yellow-400">Total Lectures:</span>{" "}
                 {state?.numberOfLectures}
@@ -50,7 +158,15 @@ const CourseDescription = () => {
                     state: { ...state },
                   })
                 }
-                className="w-full bg-yellow-500 hover:bg-yellow-400 text-black text-lg font-bold py-3 rounded-lg transition-all"
+                className="
+                  w-full bg-yellow-500 hover:bg-yellow-400
+                  text-black
+                  text-base sm:text-lg
+                  font-bold
+                  py-2.5 sm:py-3
+                  rounded-lg
+                  transition-all
+                "
               >
                 Watch Lectures ▶
               </button>
@@ -61,7 +177,15 @@ const CourseDescription = () => {
                     state: { courseId },
                   })
                 }
-                className="w-full bg-green-600 hover:bg-green-500 text-white text-lg font-bold py-3 rounded-lg transition-all"
+                className="
+                  w-full bg-green-600 hover:bg-green-500
+                  text-white
+                  text-base sm:text-lg
+                  font-bold
+                  py-2.5 sm:py-3
+                  rounded-lg
+                  transition-all
+                "
               >
                 Buy This Course 💳
               </button>
@@ -69,26 +193,22 @@ const CourseDescription = () => {
           </div>
 
           {/* ================= RIGHT CARD ================= */}
-          <div className="space-y-4 bg-[#111827] p-8 rounded-xl shadow-lg border border-gray-700">
-            <h1 className="text-4xl font-extrabold text-yellow-400 text-center">
+          <div className="space-y-4 bg-[#111827] p-5 sm:p-6 lg:p-8 rounded-xl shadow-lg border border-gray-700">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-yellow-400 text-center">
               {state?.title}
             </h1>
 
-            <p className="text-yellow-400 font-semibold text-lg">
+            <p className="text-yellow-400 font-semibold text-base sm:text-lg">
               Course Description
             </p>
 
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
               {state?.description}
             </p>
 
-            {/* <h2 className="text-2xl font-bold text-yellow-400">
-              {state?.price === 0 ? "Free Course" : `Price: ₹ ${state.price}`}
-            </h2> */}
-
-            {/*  ACCESS INFO */}
+            {/* ACCESS INFO */}
             {!hasAccess && role !== "admin" && (
-              <p className="text-red-400 font-semibold mt-4">
+              <p className="text-red-400 font-semibold mt-4 text-sm sm:text-base">
                 ⚠ You are not subscribed to this course
               </p>
             )}
@@ -98,5 +218,6 @@ const CourseDescription = () => {
     </HomeLayout>
   );
 };
+
 
 export default CourseDescription;

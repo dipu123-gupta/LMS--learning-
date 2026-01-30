@@ -144,6 +144,7 @@ const Profile = () => {
               Cancel Subscription
             </button>
           )}
+          
         </div>
       </div>
     </HomeLayout>

@@ -6,29 +6,157 @@ import Footer from "../Components/Footer.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./../Redux/Slices/AuthSlice.js";
 
+// const HomeLayout = ({ children }) => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   // for checking if user is logged in
+//   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+
+//   // for Displaying the option is acc to role
+//   const role = useSelector((state) => state?.auth?.role);
+
+//   const changeWith = () => {
+//     const drawerSide = document.getElementsByClassName("drawer-side");
+//     drawerSide[0].style.width = "auto";
+//   };
+
+//   const hideDrawer = () => {
+//     const element = document.getElementsByClassName("drawer-toggle");
+//     element[0].checked = false;
+
+//     const drawerSide = document.getElementsByClassName("drawer-side");
+//     drawerSide[0].style.width = "0";
+//   };
+//   // logout handler
+//   const handleLogot = async (e) => {
+//     e.preventDefault();
+//     const res = await dispatch(logout());
+//     if (res?.payload?.success) {
+//       navigate("/");
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-[90vh]">
+//       <div className="drawer absolute left-0 z-50 w-fit">
+//         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+//         <div className="drawer-content">
+//           {/* Page content here */}
+//           <label htmlFor="my-drawer" className="cursor-pointer relative">
+//             <FiMenu
+//               onClick={changeWith}
+//               size={"32px"}
+//               className="font-bold text-white m-4"
+//             />
+//           </label>
+//         </div>
+
+//         <div className="drawer-side w-0">
+//           <label htmlFor="my-drawer" className="drawer-overlay"></label>
+//           <ul className="menu p-4 w-48 h-[100%] sm:w-80 bg-base-300 text-base-content relative shadow-2xl ">
+//             {/* Sidebar content here */}
+//             <li className="w-fit absolute right-2 z-50">
+//               <button onClick={hideDrawer}>
+//                 <AiFillCloseCircle size={24} />
+//               </button>
+//             </li>
+//             <li>
+//               <Link to="/">Home</Link>
+//             </li>
+//             {isLoggedIn && role === "admin" && (
+//               <li>
+//                 <Link to="/admin/dashboard">Admin DashBoard</Link>
+//               </li>
+//             )}
+
+//             {isLoggedIn && role === "admin" && (
+//               <li>
+//                 <Link to="/course/create">Create New Course</Link>
+//               </li>
+//             )}
+
+//             <li>
+//               <Link to="/courses">All Course</Link>
+//             </li>
+//             <li>
+//               <Link to="/contact">Contact Us</Link>
+//             </li>
+//             <li>
+//               <Link to="/about">about Us</Link>
+//             </li>
+
+//             {!isLoggedIn && (
+//               <li className="absolute bottom-2 w-[90%]">
+//                 <div className="w-full flex items-center justify-center gap-4">
+//                   <Link
+//                     to="/login"
+//                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+//                   >
+//                     Login
+//                   </Link>
+
+//                   <Link
+//                     to="/signup"
+//                     className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+//                   >
+//                     SignUp
+//                   </Link>
+//                 </div>
+//               </li>
+//             )}
+
+//             {isLoggedIn && (
+//               <li className="absolute bottom-4 w-[90%]">
+//                 <div className="w-full flex items-center justify-center gap-4">
+//                   <Link
+//                     to="/user/profile"
+//                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+//                   >
+//                     Profile
+//                   </Link>
+
+//                   <button
+//                     onClick={handleLogot}
+//                     className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+//                   >
+//                     LogOut
+//                   </button>
+//                 </div>
+//               </li>
+//             )}
+//           </ul>
+//         </div>
+//       </div>
+
+//       {children}
+
+//       <Footer />
+//     </div>
+//   );
+// };
+
+
 const HomeLayout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // for checking if user is logged in
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
-
-  // for Displaying the option is acc to role
   const role = useSelector((state) => state?.auth?.role);
 
   const changeWith = () => {
     const drawerSide = document.getElementsByClassName("drawer-side");
-    drawerSide[0].style.width = "auto";
+    if (drawerSide[0]) drawerSide[0].style.width = "auto";
   };
 
   const hideDrawer = () => {
     const element = document.getElementsByClassName("drawer-toggle");
-    element[0].checked = false;
+    if (element[0]) element[0].checked = false;
 
     const drawerSide = document.getElementsByClassName("drawer-side");
-    drawerSide[0].style.width = "0";
+    if (drawerSide[0]) drawerSide[0].style.width = "0";
   };
-  // logout handler
+
   const handleLogot = async (e) => {
     e.preventDefault();
     const res = await dispatch(logout());
@@ -38,67 +166,95 @@ const HomeLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-[90vh]">
-      <div className="drawer absolute left-0 z-50 w-fit">
+    <div className="min-h-[90vh] relative">
+
+      {/* ================= DRAWER ================= */}
+      <div className="drawer fixed left-0 top-0 z-50">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+
+        {/* MENU ICON */}
         <div className="drawer-content">
-          {/* Page content here */}
-          <label htmlFor="my-drawer" className="cursor-pointer relative">
+          <label htmlFor="my-drawer" className="cursor-pointer">
             <FiMenu
               onClick={changeWith}
-              size={"32px"}
-              className="font-bold text-white m-4"
+              size={32}
+              className="text-white m-4"
             />
           </label>
         </div>
 
+        {/* SIDEBAR */}
         <div className="drawer-side w-0">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-48 h-[100%] sm:w-80 bg-base-300 text-base-content relative shadow-2xl ">
-            {/* Sidebar content here */}
-            <li className="w-fit absolute right-2 z-50">
+          <label
+            htmlFor="my-drawer"
+            className="drawer-overlay"
+            onClick={hideDrawer}
+          ></label>
+
+          <ul
+            className="
+              menu
+              p-4
+              w-64 sm:w-72
+              min-h-full
+              bg-base-300
+              text-base-content
+              relative
+              shadow-2xl
+            "
+          >
+            {/* CLOSE BUTTON */}
+            <li className="absolute right-3 top-3">
               <button onClick={hideDrawer}>
-                <AiFillCloseCircle size={24} />
+                <AiFillCloseCircle size={22} />
               </button>
             </li>
-            <li>
+
+            {/* LINKS */}
+            <li onClick={hideDrawer}>
               <Link to="/">Home</Link>
             </li>
+
             {isLoggedIn && role === "admin" && (
-              <li>
-                <Link to="/admin/dashboard">Admin DashBoard</Link>
+              <li onClick={hideDrawer}>
+                <Link to="/admin/dashboard">Admin Dashboard</Link>
               </li>
             )}
 
             {isLoggedIn && role === "admin" && (
-              <li>
+              <li onClick={hideDrawer}>
                 <Link to="/course/create">Create New Course</Link>
               </li>
             )}
 
-            <li>
-              <Link to="/courses">All Course</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
-            </li>
-            <li>
-              <Link to="/about">about Us</Link>
+            <li onClick={hideDrawer}>
+              <Link to="/courses">All Courses</Link>
             </li>
 
+            <li onClick={hideDrawer}>
+              <Link to="/contact">Contact Us</Link>
+            </li>
+
+            <li onClick={hideDrawer}>
+              <Link to="/about">About Us</Link>
+            </li>
+
+            {/* AUTH BUTTONS */}
             {!isLoggedIn && (
-              <li className="absolute bottom-2 w-[90%]">
-                <div className="w-full flex items-center justify-center gap-4">
+              <li className="absolute bottom-4 w-[90%] left-1/2 -translate-x-1/2">
+                <div className="flex gap-3">
                   <Link
                     to="/login"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+                    onClick={hideDrawer}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold w-full text-center"
                   >
                     Login
                   </Link>
 
                   <Link
                     to="/signup"
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+                    onClick={hideDrawer}
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md font-semibold w-full text-center"
                   >
                     SignUp
                   </Link>
@@ -107,20 +263,24 @@ const HomeLayout = ({ children }) => {
             )}
 
             {isLoggedIn && (
-              <li className="absolute bottom-4 w-[90%]">
-                <div className="w-full flex items-center justify-center gap-4">
+              <li className="absolute bottom-4 w-[90%] left-1/2 -translate-x-1/2">
+                <div className="flex gap-3">
                   <Link
                     to="/user/profile"
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+                    onClick={hideDrawer}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-semibold w-full text-center"
                   >
                     Profile
                   </Link>
 
                   <button
-                    onClick={handleLogot}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 font-semibold rounded-md w-full text-center"
+                    onClick={(e) => {
+                      hideDrawer();
+                      handleLogot(e);
+                    }}
+                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md font-semibold w-full"
                   >
-                    LogOut
+                    Logout
                   </button>
                 </div>
               </li>
@@ -129,11 +289,14 @@ const HomeLayout = ({ children }) => {
         </div>
       </div>
 
-      {children}
+      {/* ================= PAGE CONTENT ================= */}
+      <div className="pt-14">{children}</div>
 
+      {/* ================= FOOTER ================= */}
       <Footer />
     </div>
   );
 };
+
 
 export default HomeLayout;

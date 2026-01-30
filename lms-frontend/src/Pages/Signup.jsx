@@ -109,99 +109,291 @@ const Signup = () => {
 
     setPreviewImage("");
   };
-
   return (
-    <HomeLayout>
-      <div className="flex items-center justify-center h-[90vh]">
-        <form
-          onSubmit={createNewAccount}
-          noValidate
-          className="flex flex-col justify-center gap-3 p-4 text-white w-96 shadow-[0_0_10px_black]"
-        >
-          <h1 className="text-center text-2xl font-bold">Registration Page</h1>
-          <label htmlFor="image-uploads" className="cursor-pointer">
-            {previewImage ? (
-              <img
-                src={previewImage}
-                className="w-24 h-24 rounded-full m-auto"
-              />
-            ) : (
-              <BsPersonCircle className="w-24 h-24 rounded-full m-auto" />
-            )}
+  <HomeLayout>
+    <div className="flex items-center justify-center min-h-[90vh] px-4">
+      <form
+        onSubmit={createNewAccount}
+        noValidate
+        className="
+          flex flex-col justify-center gap-3
+          p-4 sm:p-6
+          text-white
+          w-full sm:w-[420px] lg:w-96
+          shadow-[0_0_10px_black]
+          rounded-md
+        "
+      >
+        <h1 className="text-center text-xl sm:text-2xl font-bold">
+          Registration Page
+        </h1>
+
+        {/* Avatar */}
+        <label htmlFor="image-uploads" className="cursor-pointer">
+          {previewImage ? (
+            <img
+              src={previewImage}
+              className="w-24 h-24 rounded-full m-auto object-cover"
+            />
+          ) : (
+            <BsPersonCircle className="w-24 h-24 rounded-full m-auto" />
+          )}
+        </label>
+
+        <input
+          type="file"
+          className="hidden"
+          id="image-uploads"
+          accept=".jpg, .jpeg, .png, .svg"
+          onChange={getImage}
+        />
+
+        {/* Name */}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="name" className="font-semibold">
+            Name
           </label>
           <input
-            type="file"
-            className="hidden"
-            id="image-uploads"
-            accept=".jpg, .jpeg, .png, .svg"
-            name="image-uploads"
-            onChange={getImage} 
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter Your Full Name"
+            className="bg-transparent px-2 py-2 border rounded-sm"
+            onChange={handleUserInput}
+            value={signupData.name}
           />
+        </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name" className="font-semibold">
-              Name
-            </label>
-            <input
-              type="text"
-              required
-              name="name"
-              id="name"
-              placeholder="Enter Your Full Name"
-              className="bg-transparent px-2 py-1 border"
-              onChange={handleUserInput}
-              value={signupData.name}
-            />
-          </div>
+        {/* Email */}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="email" className="font-semibold">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            className="bg-transparent px-2 py-2 border rounded-sm"
+            onChange={handleUserInput}
+            value={signupData.email}
+          />
+        </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              className="bg-transparent px-2 py-1 border"
-              onChange={handleUserInput}
-              value={signupData.email}
-            />
-          </div>
+        {/* Password */}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="password" className="font-semibold">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            className="bg-transparent px-2 py-2 border rounded-sm"
+            onChange={handleUserInput}
+            value={signupData.password}
+          />
+        </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              className="bg-transparent px-2 py-1 border"
-              onChange={handleUserInput}
-              value={signupData.password}
-            />
-          </div>
-          <button
-            type="submit"
-            className=" mt-2 bg-yellow-600 hover:bg-yellow-400 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-lg cursor-pointer"
-          >
-            Create account
-          </button>
+        {/* Button */}
+        <button
+          type="submit"
+          className="
+            mt-2
+            bg-yellow-600 hover:bg-yellow-400
+            transition-all duration-300
+            rounded-sm py-2
+            font-semibold text-lg
+          "
+        >
+          Create account
+        </button>
 
-          <p className="text-center">
-            Already hava an account ?{" "}
-            <Link to="/login" className="link text-accent cursor-pointer">
-              Login
-            </Link>
-          </p>
-        </form>
-      </div>
-    </HomeLayout>
-  );
+        {/* Login */}
+        <p className="text-center text-sm sm:text-base">
+          Already have an account?{" "}
+          <Link to="/login" className="text-yellow-500 font-semibold">
+            Login
+          </Link>
+        </p>
+      </form>
+    </div>
+  </HomeLayout>
+);
+
 };
+
+
+// const Signup = () => {
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const [previewImage, setPreviewImage] = useState("");
+
+//   const [signupData, setSignupData] = useState({
+//     name: "",
+//     email: "",
+//     password: "",
+//     avatar: "",
+//   });
+
+//   const handleUserInput = (e) => {
+//     const { name, value } = e.target;
+//     setSignupData({ ...signupData, [name]: value });
+//   };
+
+//   const getImage = (event) => {
+//     const uploadedImage = event.target.files[0];
+//     if (!uploadedImage) return;
+
+//     setSignupData({ ...signupData, avatar: uploadedImage });
+//     setPreviewImage(URL.createObjectURL(uploadedImage));
+//   };
+
+//   const createNewAccount = async (event) => {
+//     event.preventDefault();
+//     // validation same rahegi
+//   };
+
+//   return (
+//     <HomeLayout>
+//       <div className="min-h-[90vh] flex items-center justify-center px-4">
+//         <form
+//           onSubmit={createNewAccount}
+//           noValidate
+//           className="
+//             w-full 
+//             max-w-md 
+//             bg-black/60 
+//             backdrop-blur-md
+//             text-white 
+//             rounded-lg 
+//             p-6 
+//             space-y-4 
+//             shadow-lg
+//           "
+//         >
+//           <h1 className="text-center text-2xl font-bold">
+//             Create Account
+//           </h1>
+
+//           {/* Avatar */}
+//           <label htmlFor="image-uploads" className="cursor-pointer block">
+//             {previewImage ? (
+//               <img
+//                 src={previewImage}
+//                 alt="avatar"
+//                 className="w-24 h-24 sm:w-28 sm:h-28 rounded-full mx-auto object-cover border"
+//               />
+//             ) : (
+//               <BsPersonCircle className="w-24 h-24 sm:w-28 sm:h-28 mx-auto" />
+//             )}
+//           </label>
+
+//           <input
+//             type="file"
+//             id="image-uploads"
+//             className="hidden"
+//             accept=".jpg, .jpeg, .png"
+//             onChange={getImage}
+//           />
+
+//           {/* Name */}
+//           <div className="flex flex-col gap-1">
+//             <label className="text-sm font-semibold">Name</label>
+//             <input
+//               type="text"
+//               name="name"
+//               placeholder="Enter your full name"
+//               value={signupData.name}
+//               onChange={handleUserInput}
+//               className="
+//                 bg-transparent 
+//                 border 
+//                 px-3 
+//                 py-2 
+//                 rounded 
+//                 focus:outline-none 
+//                 focus:border-yellow-400
+//               "
+//             />
+//           </div>
+
+//           {/* Email */}
+//           <div className="flex flex-col gap-1">
+//             <label className="text-sm font-semibold">Email</label>
+//             <input
+//               type="email"
+//               name="email"
+//               placeholder="Enter your email"
+//               value={signupData.email}
+//               onChange={handleUserInput}
+//               className="
+//                 bg-transparent 
+//                 border 
+//                 px-3 
+//                 py-2 
+//                 rounded 
+//                 focus:outline-none 
+//                 focus:border-yellow-400
+//               "
+//             />
+//           </div>
+
+//           {/* Password */}
+//           <div className="flex flex-col gap-1">
+//             <label className="text-sm font-semibold">Password</label>
+//             <input
+//               type="password"
+//               name="password"
+//               placeholder="Enter your password"
+//               value={signupData.password}
+//               onChange={handleUserInput}
+//               className="
+//                 bg-transparent 
+//                 border 
+//                 px-3 
+//                 py-2 
+//                 rounded 
+//                 focus:outline-none 
+//                 focus:border-yellow-400
+//               "
+//             />
+//           </div>
+
+//           {/* Button */}
+//           <button
+//             type="submit"
+//             className="
+//               w-full 
+//               bg-yellow-600 
+//               hover:bg-yellow-500 
+//               transition 
+//               py-2 
+//               rounded 
+//               font-semibold 
+//               text-lg
+//             "
+//           >
+//             Create Account
+//           </button>
+
+//           {/* Login */}
+//           <p className="text-center text-sm">
+//             Already have an account?{" "}
+//             <Link
+//               to="/login"
+//               className="text-yellow-400 hover:underline"
+//             >
+//               Login
+//             </Link>
+//           </p>
+//         </form>
+//       </div>
+//     </HomeLayout>
+//   );
+// };
+
 
 export default Signup;

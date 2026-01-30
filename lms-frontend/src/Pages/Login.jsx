@@ -38,81 +38,110 @@ const Login = () => {
     }
   };
 
-  return (
-    <HomeLayout>
-      <div className="flex items-center justify-center min-h-[90vh] bg-gradient-to-br from-[#0f172a] to-[#020617]">
-        <form
-          onSubmit={onLogin}
-          noValidate
-          className="flex flex-col gap-4 p-6 w-96 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.7)] text-white"
-        >
-          <h1 className="text-center text-2xl font-bold tracking-wide">
-            Login Page
-          </h1>
 
-          {/* Email */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold text-sm">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              className="bg-transparent px-3 py-2 border border-white/20 rounded focus:outline-none focus:border-yellow-400"
-              onChange={handleUserInput}
-              value={loginData.email}
-            />
-          </div>
+return (
+  <HomeLayout>
+    <div className="flex items-center justify-center min-h-[90vh] px-4 bg-gradient-to-br from-[#0f172a] to-[#020617]">
+      <form
+        onSubmit={onLogin}
+        noValidate
+        className="
+          flex flex-col gap-4
+          p-5 sm:p-6
+          w-full sm:w-[420px] lg:w-96
+          bg-white/5 backdrop-blur-xl
+          border border-white/10
+          rounded-xl
+          shadow-[0_0_30px_rgba(0,0,0,0.7)]
+          text-white
+        "
+      >
+        <h1 className="text-center text-xl sm:text-2xl font-bold tracking-wide">
+          Login Page
+        </h1>
 
-          {/* Password */}
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold text-sm">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              className="bg-transparent px-3 py-2 border border-white/20 rounded focus:outline-none focus:border-yellow-400"
-              onChange={handleUserInput}
-              value={loginData.password}
-            />
+        {/* Email */}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="email" className="font-semibold text-sm">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            className="
+              bg-transparent
+              px-3 py-2
+              border border-white/20
+              rounded
+              focus:outline-none
+              focus:border-yellow-400
+            "
+            onChange={handleUserInput}
+            value={loginData.email}
+          />
+        </div>
 
-            <Link
-              to="/forgot-password"
-              className="text-sm text-yellow-400 hover:underline self-end"
-            >
-              Forgot password ?
-            </Link>
-          </div>
+        {/* Password */}
+        <div className="flex flex-col gap-1">
+          <label htmlFor="password" className="font-semibold text-sm">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            className="
+              bg-transparent
+              px-3 py-2
+              border border-white/20
+              rounded
+              focus:outline-none
+              focus:border-yellow-400
+            "
+            onChange={handleUserInput}
+            value={loginData.password}
+          />
 
-          {/* Button */}
-          <button
-            type="submit"
-            className="mt-2 bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 rounded-md py-2 font-bold text-black text-lg"
+          <Link
+            to="/forgot-password"
+            className="text-sm text-yellow-400 hover:underline self-end mt-1"
           >
-            Login
-          </button>
+            Forgot password ?
+          </Link>
+        </div>
 
-          {/* Signup */}
-          <p className="text-center text-sm text-gray-300">
-            Do not have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-yellow-400 font-semibold hover:underline"
-            >
-              Signup
-            </Link>
-          </p>
-        </form>
-      </div>
-    </HomeLayout>
-  );
+        {/* Button */}
+        <button
+          type="submit"
+          className="
+            mt-2
+            bg-yellow-500 hover:bg-yellow-600
+            transition-all duration-300
+            rounded-md py-2
+            font-bold text-black text-lg
+          "
+        >
+          Login
+        </button>
+
+        {/* Signup */}
+        <p className="text-center text-sm text-gray-300">
+          Do not have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-yellow-400 font-semibold hover:underline"
+          >
+            Signup
+          </Link>
+        </p>
+      </form>
+    </div>
+  </HomeLayout>
+);
+
 };
 
 export default Login;

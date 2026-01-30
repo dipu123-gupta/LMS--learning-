@@ -1,19 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <div className="h-screen flex flex-col justify-center items-center bg-[#1A2238]">
-      <h1 className="text-9xl font-extrabold text-white tracking-widest">
+      
+      {/* 404 */}
+      <h1 className="text-6xl sm:text-7xl md:text-9xl font-extrabold text-white tracking-widest">
         404
       </h1>
 
+      {/* Badge */}
       <div className="bg-black -translate-y-5 text-white px-2 text-sm rounded rotate-12 absolute">
         page not found...
       </div>
 
+      {/* Button */}
       <button className="mt-5">
         <span
           onClick={() => navigate(-1)}
@@ -27,5 +32,7 @@ const NotFound = () => {
     </div>
   );
 };
+
+
 
 export default NotFound;

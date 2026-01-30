@@ -7,6 +7,88 @@ import einstine from "../imge/einstines.png";
 import melsonMandel from "../imge/melsonMandela.png";
 import setveJobs from "../imge/setveJobs.png";
 
+// const AboutUs = () => {
+//   const celibrities = [
+//     {
+//       title: "A. P. J. Abdul Kalam",
+//       description:
+//         "Education is the most powerful tool you can use to change the world",
+//       image: apj,
+//       slideNumber: 1,
+//     },
+//     {
+//       title: "Nelson Mandela",
+//       description:
+//         "Education is the most powerful weapon which you can use to change the world",
+//       image: melsonMandel,
+//       slideNumber: 2,
+//     },
+//     {
+//       title: "Bill Gates",
+//       description:
+//         "Don’t compare yourself with anyone in this world. If you do so, you are insulting yourself.",
+//       image: billGetes,
+//       slideNumber: 3,
+//     },
+//     {
+//       title: "Steve Jobs",
+//       description:
+//         "Your time is limited, so don’t waste it living someone else’s life.",
+//       image: setveJobs,
+//       slideNumber: 4,
+//     },
+//     {
+//       title: "Albert Einstein",
+//       description:
+//         "Education is not the learning of facts, but the training of the mind to think",
+//       image: einstine,
+//       slideNumber: 5,
+//     },
+//   ];
+
+//   return (
+//     <HomeLayout>
+//       <div className="pl-20 pt-20 flex flex-col text-white">
+//         <div className="flex items-center gap-5 mx-10">
+//           <section className="w-1/2 space-y-10">
+//             <h1 className="text-4xl text-yellow-500 font-semibold">
+//               Affordable and quality education
+//             </h1>
+//             <p className="text-xl text-gray-200">
+//               Our goal is to provide affordable and quality education to the
+//               world. We are providing the platform for aspiring teachers and
+//               students to share their skills, creativity and knowledge.
+//             </p>
+//           </section>
+
+//           <div className="w-1/2">
+//             <img
+//               src={aboutImage}
+//               alt="about main image"
+//               className="drop-shadow-2xl"
+//               style={{
+//                 filter: "drop-shadow(0px 10px 10px rgb(0 0 0))",
+//               }}
+//             />
+//           </div>
+//         </div>
+
+//         {/* CAROUSEL */}
+//         <div className="carousel w-1/2 my-16 m-auto">
+//           {celibrities.map((celebrity) => (
+//             <CarouselSlide
+//               key={celebrity.slideNumber}
+//               {...celebrity}
+//               totalSlideNumber={celibrities.length}
+//             />
+//           ))}
+//         </div>
+//       </div>
+//     </HomeLayout>
+//   );
+// };
+
+
 const AboutUs = () => {
   const celibrities = [
     {
@@ -48,24 +130,27 @@ const AboutUs = () => {
 
   return (
     <HomeLayout>
-      <div className="pl-20 pt-20 flex flex-col text-white">
-        <div className="flex items-center gap-5 mx-10">
-          <section className="w-1/2 space-y-10">
-            <h1 className="text-4xl text-yellow-500 font-semibold">
+      <div className="px-5 pt-10 md:px-10 md:pt-16 lg:px-20 lg:pt-20 flex flex-col text-white">
+        
+        {/* TOP SECTION */}
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 mx-0 lg:mx-10">
+          
+          <section className="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
+            <h1 className="text-3xl md:text-4xl text-yellow-500 font-semibold">
               Affordable and quality education
             </h1>
-            <p className="text-xl text-gray-200">
+            <p className="text-base md:text-xl text-gray-200">
               Our goal is to provide affordable and quality education to the
               world. We are providing the platform for aspiring teachers and
               students to share their skills, creativity and knowledge.
             </p>
           </section>
 
-          <div className="w-1/2">
+          <div className="w-full lg:w-1/2 flex justify-center">
             <img
               src={aboutImage}
               alt="about main image"
-              className="drop-shadow-2xl"
+              className="drop-shadow-2xl w-72 md:w-96 lg:w-full"
               style={{
                 filter: "drop-shadow(0px 10px 10px rgb(0 0 0))",
               }}
@@ -74,7 +159,7 @@ const AboutUs = () => {
         </div>
 
         {/* CAROUSEL */}
-        <div className="carousel w-1/2 my-16 m-auto">
+        <div className="carousel w-full md:w-3/4 lg:w-1/2 my-10 md:my-16 mx-auto">
           {celibrities.map((celebrity) => (
             <CarouselSlide
               key={celebrity.slideNumber}
@@ -83,9 +168,11 @@ const AboutUs = () => {
             />
           ))}
         </div>
+
       </div>
     </HomeLayout>
   );
 };
+
 
 export default AboutUs;
