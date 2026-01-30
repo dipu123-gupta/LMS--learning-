@@ -21,7 +21,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://lms-learning-management-system-1-nso7.onrender.com"
+      "https://lms-learning.onrender.com"
     ],
     credentials: true,
   })
