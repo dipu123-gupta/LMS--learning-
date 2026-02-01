@@ -239,13 +239,32 @@ const forgetPassword = async (req, res, next) => {
 `;
 
     //  send email
-    await sendEmail(email, subject, message);
+    // await sendEmail(email, subject, message);
 
-    res.status(200).json({
-      success: true,
-      message: "Reset password link generated",
-      resetPasswordURL, // test ke liye
-    });
+    // res.status(200).json({
+    //   success: true,
+    //   message: "Reset password link generated",
+    //   resetPasswordURL, // test ke liye
+    // });
+
+    try {
+      await sendEmail(email, subject, message);
+
+      res.status(200).json({
+        success: true,
+        message: "Reset password link sent to email",
+      });
+    } catch (error) {
+      console.error("EMAIL ERROR:", error);
+
+      user.forgetPasswordToken = undefined;
+      user.forgetPasswordExpiry = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      return next(
+        new AppError("Email could not be sent, please try again", 500),
+      );
+    }
   } catch (error) {
     new AppError(
       error || "Failed to generate reset password link, please try again",
