@@ -24,7 +24,7 @@ export const forgotPassword = createAsyncThunk(
 ========================= */
 export const resetPassword = createAsyncThunk(
   "password/reset",
-  async ({ token, password }) => {
+  async ({resetToken , password }) => {
     try {
       const res = await axiosInstance.post(
         `/user/reset-password/${resetToken}`,
@@ -41,8 +41,29 @@ export const resetPassword = createAsyncThunk(
 
 const passwordSlice = createSlice({
   name: "password",
-  initialState: {},
+  initialState: {
+    loading: false,
+    success: false,
+  },
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.loading = false;
+        state.success = true;
+      });
+  },
 });
+
 
 export default passwordSlice.reducer;

@@ -27,11 +27,6 @@ const Checkout = () => {
 
   const [orderData, setOrderData] = useState(null);
 
-  if (!razorpayKey) {
-    toast.error("Payment key not loaded");
-    return;
-  }
-
   useEffect(() => {
     if (!courseId) {
       toast.error("Invalid course selection");
@@ -40,8 +35,10 @@ const Checkout = () => {
     }
 
     (async () => {
+      // ✅ pehle key load hone do
       await dispatch(getRazorpayId());
 
+      // ✅ phir order create karo
       const res = await dispatch(purchaseCourseBundle({ courseId }));
 
       if (res?.payload?.success) {
@@ -52,9 +49,15 @@ const Checkout = () => {
     })();
   }, [courseId, dispatch, navigate]);
 
-  if (!razorpayKey) {
-    toast.error("Payment key not loaded");
-    return;
+  // ✅ key/order load hone tak UI wait karega
+  if (!razorpayKey || !orderData) {
+    return (
+      <HomeLayout>
+        <div className="min-h-[90vh] flex items-center justify-center text-white">
+          Initializing payment...
+        </div>
+      </HomeLayout>
+    );
   }
 
   const handleSubscription = async (e) => {

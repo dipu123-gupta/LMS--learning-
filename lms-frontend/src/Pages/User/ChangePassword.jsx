@@ -25,6 +25,8 @@ const ChangePassword = () => {
 
     if (res?.payload?.success) {
       toast.success("Password changed successfully");
+      navigate("/login");
+
     }
   };
 

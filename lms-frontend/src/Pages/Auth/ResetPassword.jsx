@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import HomeLayout from "../../Layouts/HomeLayout.jsx";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../../Redux/Slices/PasswordSlice.js";
-
+import { toast } from "react-hot-toast";
 
 const ResetPassword = () => {
   const { resetToken } = useParams();
@@ -16,12 +16,17 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) return;
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
     const res = await dispatch(resetPassword({ resetToken, password }));
 
-    if (res?.payload?.success) {
-      navigate("/login");
+    console.log(resetToken);
+
+    if (!res?.payload?.success) {
+      toast.error(res?.payload?.message || "Reset link expired");
     }
   };
 

@@ -56,22 +56,6 @@ export const verifyUserPayment = createAsyncThunk(
     }
   },
 );
-// /* ======================
-//    GET PAYMENT RECORD (ADMIN)
-// ====================== */
-// export const getPaymentRecord = createAsyncThunk(
-//   "/payment/record",
-//   async () => {
-//     try {
-//       const response = await axiosInstance.get("/payment/stats");
-//       return response.data;
-//     } catch (error) {
-//       toast.error("Failed to get payment records");
-//       throw error;
-//     }
-//   },
-// );
-
 /* ======================
    CANCEL SUBSCRIPTION
 ====================== */
@@ -108,25 +92,14 @@ const razorpaySlice = createSlice({
       .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
         state.subscription_id = action.payload.order?.id;
       })
-
       /* Verify */
       .addCase(verifyUserPayment.fulfilled, (state) => {
         state.isPaymentVerified = true;
         toast.success("Payment verified successfully");
       })
-
       .addCase(verifyUserPayment.rejected, (state) => {
         state.isPaymentVerified = false;
       })
-
-      /* Payment Records */
-      // .addCase(getPaymentRecord.fulfilled, (state, action) => {
-      //   state.allPayments = action.payload;
-      //   state.monthlySalesRecod = action.payload.monthlySalesRecod || [];
-      //   state.monthlyRevenue = action.payload.monthlyRevenue || [];
-      //   state.totalRevenue = action.payload.totalRevenue || 0;
-      // })
-
       .addCase(getPaymentStats.fulfilled, (state, action) => {
         state.monthlySalesRecod = action.payload.monthlySalesRecod || [];
         state.monthlyRevenue = action.payload.monthlyRevenue || [];

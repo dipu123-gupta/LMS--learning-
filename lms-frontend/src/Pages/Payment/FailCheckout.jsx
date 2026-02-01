@@ -1,5 +1,4 @@
 import HomeLayout from '../../Layouts/HomeLayout.jsx';
-import React from 'react'
 import { RxCrossCircled } from "react-icons/rx";
 import { Link } from 'react-router-dom';
 
