@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://lms-learning-frontend.vercel.app",
+  "https://lms-learning.onrender.com",
 ];
 
 app.use(
