@@ -206,7 +206,10 @@ const forgetPassword = async (req, res, next) => {
     const resetToken = user.generatePasswordResetToken();
     await user.save();
 
-    const resetPasswordURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const frontendURL = process.env.FRONTEND_URL.replace(/\/$/, "");
+
+    const resetPasswordURL = `${frontendURL}/reset-password/${resetToken}`;
+
     //  email content (HTML – exactly like image)
     const subject = "Reset Password";
 
