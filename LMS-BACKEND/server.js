@@ -20,13 +20,6 @@ export const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_SECRET,
 });
 
-// app.get("/", (req, res) => {
-//   res.status(200).json({
-//     success: true,
-//     message: "LMS Backend is running 🚀",
-//   });
-// });
-
 connectionToDB()
   .then(() => {
     app.listen(PORT, () => {

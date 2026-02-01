@@ -3,22 +3,49 @@ import AppError from "../utils/error.util.js";
 import User from "../models/user.models.js";
 
 // ! user uthentication 
+// const isLoggedIn = async (req, res, next) => {
+//   const { token } = req.cookies;
+
+//   if (!token) return next(new AppError("Unauthenticated", 401));
+
+//   const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+//   const user = await User.findById(decoded.id);
+
+//   if (!user || user.activeToken !== token) {
+//     return next(new AppError("Session expired", 401));
+//   }
+
+//   req.user = user; 
+//   next();
+// };
+
+
 const isLoggedIn = async (req, res, next) => {
-  const { token } = req.cookies;
+  try {
+    const token =
+      req.cookies?.token ||
+      req.header("Authorization")?.replace("Bearer ", "");
 
-  if (!token) return next(new AppError("Unauthenticated", 401));
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
 
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select("-password");
 
-  const user = await User.findById(decoded.id);
-
-  if (!user || user.activeToken !== token) {
-    return next(new AppError("Session expired", 401));
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
   }
-
-  req.user = user; // 🔥 FULL USER
-  next();
 };
+
 
 // Utherized Role
 const authorizedRole = (...roles) =>

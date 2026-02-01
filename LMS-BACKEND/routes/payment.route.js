@@ -9,7 +9,6 @@ import {
 import { authorizedRole, isLoggedIn } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-
 // Get Razorpay Key
 router.get("/razorpay-key", isLoggedIn, getRazorpayApiKey);
 

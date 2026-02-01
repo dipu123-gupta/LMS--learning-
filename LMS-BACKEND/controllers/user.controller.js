@@ -116,10 +116,17 @@ const login = async (req, res, next) => {
 
     // res.cookie("token", token, cookieOption);
 
-     res.cookie("token", token, {
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "none",
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });
+
+    res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      secure: true, // production
+      sameSite: "None", // frontend + backend alag domain
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -129,7 +136,7 @@ const login = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    next(error);
+    new AppError(error || "Failed to login, please try again", 500);
   }
 };
 
@@ -144,7 +151,7 @@ const profile = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    next(error);
+    new AppError(error || "Failed to load user details, please try again", 500);
   }
 };
 
@@ -162,14 +169,15 @@ const logout = async (req, res, next) => {
     // res.cookie("token", null, {
     //   httpOnly: true,
     //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "none",
     //   maxAge: 0,
     // });
 
-     res.cookie("token", null, {
+    res.cookie("token", "", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      maxAge: 0,
+      expires: new Date(0),
+      secure: true,
+      sameSite: "None",
     });
 
     res.status(200).json({
@@ -177,7 +185,7 @@ const logout = async (req, res, next) => {
       message: "Logged out successfully",
     });
   } catch (error) {
-    next(error);
+    new AppError(error || "Failed to logout, please try again", 500);
   }
 };
 
@@ -239,7 +247,10 @@ const forgetPassword = async (req, res, next) => {
       resetPasswordURL, // test ke liye
     });
   } catch (error) {
-    next(error);
+    new AppError(
+      error || "Failed to generate reset password link, please try again",
+      500,
+    );
   }
 };
 
@@ -289,7 +300,7 @@ const resetPassword = async (req, res, next) => {
       message: "Password changed successfully",
     });
   } catch (error) {
-    next(error);
+    new AppError(error || "Failed to reset password, please try again", 500);
   }
 };
 
