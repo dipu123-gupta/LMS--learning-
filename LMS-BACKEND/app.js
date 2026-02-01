@@ -1,11 +1,6 @@
 import cookieParser from "cookie-parser";
-// import { config } from "dotenv";
-// config();
 import dotenv from "dotenv";
-dotenv.config();          // 👈 sabse pehle
-
-// import app from "./app.js";
-
+dotenv.config(); // 👈 sabse pehle
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -22,24 +17,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan("dev"));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lms-learning-frontend.vercel.app",
+];
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      const allowedOrigins = [
-        "http://localhost:5173",
-        "https://lms-learning.onrender.com"
-      ];
-
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
-  })
+  }),
 );
-
 
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/user", authRouter);
@@ -61,7 +49,6 @@ app.get("/u", (req, res) => {
     message: "LMS Backend is landing 🚀",
   });
 });
-
 
 app.use((req, res) => {
   res.status(404).json({ success: false, message: "Route not found" });

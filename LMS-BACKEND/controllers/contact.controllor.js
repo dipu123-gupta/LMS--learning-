@@ -17,15 +17,6 @@ const contactUs = async (req, res, next) => {
       message,
     });
 
-    // 3️ OPTIONAL: Admin email
-    /*
-    await sendEmail(
-      "admin@gmail.com",
-      "New Contact Message",
-      `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
-    );
-    */
-
     // 4️ Response
     res.status(201).json({
       success: true,
