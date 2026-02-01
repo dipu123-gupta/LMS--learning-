@@ -56,21 +56,21 @@ export const verifyUserPayment = createAsyncThunk(
     }
   },
 );
-/* ======================
-   GET PAYMENT RECORD (ADMIN)
-====================== */
-export const getPaymentRecord = createAsyncThunk(
-  "/payment/record",
-  async () => {
-    try {
-      const response = await axiosInstance.get("/payment/stats");
-      return response.data;
-    } catch (error) {
-      toast.error("Failed to get payment records");
-      throw error;
-    }
-  },
-);
+// /* ======================
+//    GET PAYMENT RECORD (ADMIN)
+// ====================== */
+// export const getPaymentRecord = createAsyncThunk(
+//   "/payment/record",
+//   async () => {
+//     try {
+//       const response = await axiosInstance.get("/payment/stats");
+//       return response.data;
+//     } catch (error) {
+//       toast.error("Failed to get payment records");
+//       throw error;
+//     }
+//   },
+// );
 
 /* ======================
    CANCEL SUBSCRIPTION
@@ -120,12 +120,12 @@ const razorpaySlice = createSlice({
       })
 
       /* Payment Records */
-      .addCase(getPaymentRecord.fulfilled, (state, action) => {
-        state.allPayments = action.payload;
-        state.monthlySalesRecod = action.payload.monthlySalesRecod || [];
-        state.monthlyRevenue = action.payload.monthlyRevenue || [];
-        state.totalRevenue = action.payload.totalRevenue || 0;
-      })
+      // .addCase(getPaymentRecord.fulfilled, (state, action) => {
+      //   state.allPayments = action.payload;
+      //   state.monthlySalesRecod = action.payload.monthlySalesRecod || [];
+      //   state.monthlyRevenue = action.payload.monthlyRevenue || [];
+      //   state.totalRevenue = action.payload.totalRevenue || 0;
+      // })
 
       .addCase(getPaymentStats.fulfilled, (state, action) => {
         state.monthlySalesRecod = action.payload.monthlySalesRecod || [];

@@ -201,11 +201,11 @@ const HomePage = () => {
     <HomeLayout>
       <div
         className="
-          pt-10 text-white
+           text-white
           flex flex-col lg:flex-row
           items-center justify-center
-          gap-10
-          mx-4 sm:mx-8 lg:mx-16
+          gap-15
+          mx-4 sm:mx-2 lg:mx-16
           min-h-[90vh]
         "
       >
@@ -225,6 +225,7 @@ const HomePage = () => {
               md:text-4xl
               lg:text-5xl
               font-semibold
+              mb-12
             "
           >
             Find out best{" "}
@@ -252,6 +253,7 @@ const HomePage = () => {
               flex flex-col sm:flex-row
               gap-4 sm:gap-6
               justify-center
+              mt-12
             "
           >
             <Link to="/courses" className="w-full sm:w-auto">

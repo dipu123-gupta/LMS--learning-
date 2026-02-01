@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import "./App.css";
 import HomePage from "./Pages/HomePage.jsx";
 import AboutUs from "./Pages/AboutUs.jsx";
@@ -23,7 +25,7 @@ import ForgotPassword from "./Pages/Auth/ForgotPassword.jsx";
 import ResetPassword from "./Pages/Auth/ResetPassword.jsx";
 import AdminDashboard from "./Pages/Dasbord/AdminDashboard.jsx";
 
-import { useDispatch  } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserData } from "./Redux/Slices/AuthSlice";
 
@@ -33,10 +35,14 @@ function App() {
     dispatch(getUserData());
   }, [dispatch]);
 
-  return (
+  const { loading } = useSelector((state) => state.auth);
 
+  if (loading) {
+    return <div className="text-white text-center mt-20">Loading...</div>;
+  }
+
+  return (
     <Routes>
-    
       {/* 🌐 Public Routes */}
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutUs />} />
