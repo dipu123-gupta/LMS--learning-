@@ -53,7 +53,7 @@ function App() {
       <Route path="/course/description/:id" element={<CourseDescription />} />
       <Route path="/denied" element={<Denied />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
 
       {/* 🔐 Admin Protected Routes */}
       <Route element={<RequireAuth allowedRole={["admin"]} />}>

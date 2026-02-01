@@ -6,7 +6,7 @@ import { resetPassword } from "../../Redux/Slices/PasswordSlice.js";
 
 
 const ResetPassword = () => {
-  const { token } = useParams();
+  const { resetToken } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const ResetPassword = () => {
 
     if (password !== confirmPassword) return;
 
-    const res = await dispatch(resetPassword({ token, password }));
+    const res = await dispatch(resetPassword({ resetToken, password }));
 
     if (res?.payload?.success) {
       navigate("/login");

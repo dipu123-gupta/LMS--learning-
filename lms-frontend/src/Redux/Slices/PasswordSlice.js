@@ -27,7 +27,7 @@ export const resetPassword = createAsyncThunk(
   async ({ token, password }) => {
     try {
       const res = await axiosInstance.post(
-        `/user/reset-password/${token}`,
+        `/user/reset-password/${resetToken}`,
         { password }
       );
       toast.success(res?.data?.message);
