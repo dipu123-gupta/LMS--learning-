@@ -1,6 +1,11 @@
 import cookieParser from "cookie-parser";
-import { config } from "dotenv";
-config();
+// import { config } from "dotenv";
+// config();
+import dotenv from "dotenv";
+dotenv.config();          // 👈 sabse pehle
+
+// import app from "./app.js";
+
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
