@@ -7,9 +7,16 @@ import {
   updateCourse,
   addLectureToCourseById,
   deleteLectureById,
-} from "../controllers/course.controllor.js"; 
+  markLectureComplete,
+  addReview,
+  updateLastWatchedLecture,
+} from "../controllers/course.controllor.js";
 import upload from "../middlewares/multer.middleware.js";
-import { authorizedRole, authorizedSubscriber, isLoggedIn } from "../middlewares/auth.middleware.js";
+import {
+  authorizedRole,
+  authorizedSubscriber,
+  isLoggedIn,
+} from "../middlewares/auth.middleware.js";
 
 const courseRouter = Router();
 
@@ -22,7 +29,7 @@ courseRouter.post(
   isLoggedIn,
   authorizedRole("admin"),
   upload.single("thumbnail"),
-  createCourse
+  createCourse,
 );
 
 // UPDATE course
@@ -32,7 +39,12 @@ courseRouter.put("/:id", isLoggedIn, authorizedRole("admin"), updateCourse);
 courseRouter.delete("/:id", isLoggedIn, authorizedRole("admin"), removeCourse);
 
 // GET lectures
-courseRouter.get("/:id", isLoggedIn,authorizedSubscriber, getLectureByCourseId);
+courseRouter.get(
+  "/:id",
+  isLoggedIn,
+  authorizedSubscriber,
+  getLectureByCourseId,
+);
 
 // ADD lecture (route fixed)
 courseRouter.post(
@@ -40,7 +52,7 @@ courseRouter.post(
   isLoggedIn,
   authorizedRole("admin"),
   upload.single("lecture"),
-  addLectureToCourseById
+  addLectureToCourseById,
 );
 
 // DELETE lecture (ADMIN)
@@ -48,9 +60,24 @@ courseRouter.delete(
   "/:courseId/lecture/:lectureId",
   isLoggedIn,
   authorizedRole("admin"),
-  deleteLectureById
+  deleteLectureById,
 );
 
+//! MARK lecture as complete (SUBSCRIBER)
+courseRouter.post(
+  "/progress",
+  isLoggedIn,
+  markLectureComplete
+);
+
+
+courseRouter.post("/review", isLoggedIn, addReview);
+
+courseRouter.post(
+  "/progress/last-watched",
+  isLoggedIn,
+  updateLastWatchedLecture
+);
 
 
 export default courseRouter;

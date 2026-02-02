@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto from "crypto"; 
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
     },
 
     forgetPasswordToken: String,
-    forgetPasswordExpiry: Date, 
+    forgetPasswordExpiry: Date,
 
     subscription: {
       id: String,
@@ -51,6 +51,24 @@ const userSchema = new mongoose.Schema(
     activeToken: {
       type: String,
     },
+
+    //! vidieo progress tracking
+    progress: [
+      {
+        courseId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Course",
+        },
+        completedLectures: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+          },
+        ],
+        lastWatchedLecture: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+      },
+    ],
   },
   { timestamps: true },
 );

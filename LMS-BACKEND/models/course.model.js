@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const courseSchema = new Schema(
   {
@@ -86,6 +86,22 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+// ! review system
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        rating: Number,
+        comment: String,
+      },
+    ],
   },
   { timestamps: true },
 );
@@ -100,7 +116,6 @@ courseSchema.pre("save", function () {
       this.price - Math.floor((this.price * this.discount) / 100);
   }
 });
-
 
 const Course = model("Course", courseSchema);
 export default Course;
