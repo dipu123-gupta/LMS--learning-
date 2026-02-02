@@ -75,6 +75,26 @@ export const deleteCourses = createAsyncThunk(
   }
 );
 
+//!course review can be added here
+export const addCourseReview = createAsyncThunk(
+  "/course/review/add",
+  async ({ courseId, rating, comment }, { dispatch }) => {
+    const res = await axiosInstance.post("/courses/review", {
+      courseId,
+      rating,
+      comment,
+    });
+
+    // 🔥 refresh courses
+    dispatch(getAllCourses());
+
+    return res.data;
+  }
+);
+
+
+
+
 const courseSlice = createSlice({
   name: "courses",
   initialState,

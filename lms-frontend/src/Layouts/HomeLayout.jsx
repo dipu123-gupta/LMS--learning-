@@ -36,7 +36,6 @@ const HomeLayout = ({ children }) => {
 
   return (
     <div className="min-h-[90vh] relative">
-
       {/* ================= DRAWER ================= */}
       <div className="drawer fixed left-0 top-0 z-50">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -99,6 +98,13 @@ const HomeLayout = ({ children }) => {
             <li onClick={hideDrawer}>
               <Link to="/courses">All Courses</Link>
             </li>
+
+            {/* ✅ MY BATCH FEATURE (NEW) */}
+            {isLoggedIn && role === "user" && (
+              <li onClick={hideDrawer}>
+                <Link to="/my-batch">My Batch</Link>
+              </li>
+            )}
 
             <li onClick={hideDrawer}>
               <Link to="/contact">Contact Us</Link>
@@ -166,6 +172,5 @@ const HomeLayout = ({ children }) => {
     </div>
   );
 };
-
 
 export default HomeLayout;

@@ -57,7 +57,6 @@ const CourseCard = ({ data }) => {
             </span>{" "}
             {data?.numberOfLectures}
           </p>
-
           <p>
             <span className="text-yellow-400 font-semibold">Price:</span>{" "}
             {data.isFree ? (
@@ -74,6 +73,9 @@ const CourseCard = ({ data }) => {
                 </span>
               </>
             )}
+          </p>
+          <p className="text-sm">
+            ⭐ {data?.averageRating ? data.averageRating : "New"}
           </p>
 
           <p>

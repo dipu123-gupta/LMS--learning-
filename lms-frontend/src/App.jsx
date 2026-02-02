@@ -28,6 +28,8 @@ import AdminDashboard from "./Pages/Dasbord/AdminDashboard.jsx";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getUserData } from "./Redux/Slices/AuthSlice";
+import Certificate from "./Pages/Certificate.jsx";
+import MyBatch from "./Pages/User/MyBatch.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +73,9 @@ function App() {
         <Route path="/checkout/fail" element={<FailCheckout />} />
         <Route path="/course/display-lectures" element={<DisplayLecture />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/certificate" element={<Certificate />} />
+        <Route path="/my-batch" element={<MyBatch />} />
+
       </Route>
 
       {/* ❌ 404 */}

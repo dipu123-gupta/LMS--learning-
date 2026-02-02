@@ -61,22 +61,28 @@ export const updateProfile = createAsyncThunk(
       error: "Failed to update profile",
     });
     return (await res).data;
-  },
+  }
 );
 
 /* ======================
-   LOAD USER (REFRESH FIX)
+   🔥 LOAD USER (MAIN DEBUG POINT)
 ====================== */
 export const getUserData = createAsyncThunk(
   "/user/details",
   async (_, { rejectWithValue }) => {
     try {
+      console.log("🟡 getUserData API CALL STARTED");
+
       const res = await axiosInstance.get("/user/profile");
+
+      console.log("🟢 getUserData RESPONSE 👉", res.data);
+
       return res.data;
     } catch (error) {
+      console.error("🔴 getUserData ERROR 👉", error?.response?.data);
       return rejectWithValue(error?.response?.data);
     }
-  },
+  }
 );
 
 /* ======================
@@ -91,7 +97,7 @@ export const changePassword = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  },
+  }
 );
 
 const authSlice = createSlice({
@@ -105,6 +111,8 @@ const authSlice = createSlice({
         state.loading = false;
         if (!action.payload?.user) return;
 
+        console.log("🟢 LOGIN USER 👉", action.payload.user);
+
         const user = action.payload.user;
         localStorage.setItem("data", JSON.stringify(user));
         localStorage.setItem("isLoggedIn", "true");
@@ -117,6 +125,7 @@ const authSlice = createSlice({
 
       /* LOGOUT */
       .addCase(logout.fulfilled, (state) => {
+        console.log("🟠 LOGOUT SUCCESS");
         localStorage.clear();
         state.isLoggedIn = false;
         state.role = "";
@@ -124,7 +133,7 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(logout.rejected, (state) => {
-        // force logout
+        console.log("🔴 LOGOUT FAILED – FORCE CLEAR");
         localStorage.clear();
         state.isLoggedIn = false;
         state.role = "";
@@ -132,9 +141,12 @@ const authSlice = createSlice({
         state.loading = false;
       })
 
-      /* LOAD USER (REFRESH) */
+      /* 🔥 LOAD USER (THIS IS KEY) */
       .addCase(getUserData.fulfilled, (state, action) => {
         state.loading = false;
+
+        console.log("🟢 AUTH SLICE UPDATED USER 👉", action.payload?.user);
+
         if (!action.payload?.user) return;
 
         const user = action.payload.user;
@@ -146,10 +158,11 @@ const authSlice = createSlice({
         state.data = user;
         state.role = user.role;
       })
-      .addCase(getUserData.rejected, (state) => {
-        // refresh fail ≠ logout
+
+      .addCase(getUserData.rejected, (state, action) => {
+        console.error("🔴 AUTH REFRESH FAILED 👉", action.payload);
         state.loading = false;
-        localStorage.clear(); // remove stale auth
+        localStorage.clear();
       })
 
       /* CHANGE PASSWORD */

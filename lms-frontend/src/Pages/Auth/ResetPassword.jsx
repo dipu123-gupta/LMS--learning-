@@ -28,6 +28,11 @@ const ResetPassword = () => {
     if (!res?.payload?.success) {
       toast.error(res?.payload?.message || "Reset link expired");
     }
+
+    if (res?.payload?.success) {
+      toast.success("Password reset successfully");
+      navigate("/login");
+    }
   };
 
   return (

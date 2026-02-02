@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../Helpers/axiosInstance.js";
 import { toast } from "react-hot-toast";
+import { getUserData } from "./AuthSlice.js";
 
 const initialState = {
   lectures: [],
@@ -23,7 +24,7 @@ export const getCourseLecture = createAsyncThunk(
       toast.error(error?.response?.data?.message);
       throw error;
     }
-  }
+  },
 );
 
 /* ADD LECTURE */
@@ -37,7 +38,7 @@ export const addCourseLecture = createAsyncThunk(
       formData.append("description", data.description);
       const responsePromise = axiosInstance.post(
         `/courses/${data.id}/lecture`,
-        formData
+        formData,
       );
       toast.promise(responsePromise, {
         loading: "Adding course lecture",
@@ -50,7 +51,7 @@ export const addCourseLecture = createAsyncThunk(
       toast.error(error?.response?.data?.message);
       throw error;
     }
-  }
+  },
 );
 
 /* DELETE LECTURE */
@@ -59,7 +60,7 @@ export const deleteCourseLecture = createAsyncThunk(
   async ({ courseId, lectureId }) => {
     try {
       const responsePromise = axiosInstance.delete(
-        `/courses/${courseId}/lecture/${lectureId}`
+        `/courses/${courseId}/lecture/${lectureId}`,
       );
       toast.promise(responsePromise, {
         loading: "Deleting lecture",
@@ -73,7 +74,31 @@ export const deleteCourseLecture = createAsyncThunk(
       toast.error(error?.response?.data?.message);
       throw error;
     }
-  }
+  },
+);
+
+//! Mark Lecture Complete
+export const markLectureCompleted = createAsyncThunk(
+  "/course/lecture/complete",
+  async ({ courseId, lectureId }, { dispatch }) => {
+    const res = await axiosInstance.post("/courses/progress", {
+      courseId,
+      lectureId,
+    });
+    dispatch(getUserData());
+    return res.data.progress;
+  },
+);
+
+export const updateLastWatchedLecture = createAsyncThunk(
+  "/course/lecture/last-watched",
+  async ({ courseId, lectureId }) => {
+    const res = await axiosInstance.post("/courses/progress/last-watched", {
+      courseId,
+      lectureId,
+    });
+    return res.data;
+  },
 );
 
 const lectureSlice = createSlice({
